@@ -8,7 +8,7 @@ services:
       - "443:443"         
     volumes:
       - ./web:/var/www/html
-    restart: always     
+    restart: always
   # wp-php:
   #   build: requirements/wp-php/
   #   env_file: .env
