@@ -3,12 +3,12 @@ FROM debian:buster
 RUN apt update && apt upgrade -y && \
     apt install -y nginx curl vim openssl
 
-RUN apt install -y php7.3 \
-    php7.3-fpm \
-    php-mysql
+# RUN apt install -y php7.3 \
+#     php7.3-fpm \
+#     php-mysql
 
-COPY www.conf /etc/php/8.2/fpm/pool.d/
-COPY www.conf /usr/local/etc/php-fpm.d/
+# COPY www.conf /etc/php/8.2/fpm/pool.d/
+# COPY www.conf /usr/local/etc/php-fpm.d/
 
 RUN mkdir -p /etc/nginx/ssl
 
@@ -19,7 +19,7 @@ RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt -keyout /etc/ngin
 RUN mkdir -p /var/run/nginx
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
-COPY ./www.conf /etc/php/7.3/fpm/pool.d/
+# COPY ./www.conf /etc/php/7.3/fpm/pool.d/
 
 RUN chmod 755 /var/www/html
 

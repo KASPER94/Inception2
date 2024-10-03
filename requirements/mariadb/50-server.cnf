@@ -6,8 +6,8 @@
 
 # this is read by the standalone daemon and embedded servers
 [client-server]
-!includedir /etc/mysql/conf.d/
-!includedir /etc/mysql/mariadb.conf.d/
+#!includedir /etc/mysql/conf.d/
+#!includedir /etc/mysql/mariadb.conf.d/
 
 # this is only for the mysqld standalone daemon
 [mysqld]
