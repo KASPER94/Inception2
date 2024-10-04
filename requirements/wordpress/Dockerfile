@@ -8,24 +8,26 @@ RUN apt-get install -y php7.3 \
     php-mysql \
     mariadb-client
 
-RUN wget https://fr.wordpress.org/wordpress-6.0-fr_FR.tar.gz -P /var/www
+# RUN wget https://wordpress.org/latest.tar.gz -P /var/www
 
-RUN cd /var/www && tar -xzf wordpress-6.0-fr_FR.tar.gz && rm wordpress-6.0-fr_FR.tar.gz
+# RUN cd /var/www && tar xfz latest.tar.gz && rm -rf wordpress-6.0-fr_FR.tar.gz
 
-RUN mkdir -p /run/php && chown www-data:www-data /run/php
-
-RUN	chown -R root:root /var/www/wordpress
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+	&& chmod +x wp-cli.phar \
+	&& mv wp-cli.phar /usr/local/bin/wp
 
 COPY ./www.conf /etc/php/7.3/fpm/pool.d/
 
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
-RUN chmod +x wp-cli.phar
-RUN mv wp-cli.phar /usr/local/bin/wp
+RUN mkdir /run/php
 
-COPY auto_config.sh /usr/local/bin/auto_config.sh
+COPY auto_config.sh /usr/local/bin/
 
 RUN chmod +x /usr/local/bin/auto_config.sh
 
 ENTRYPOINT ["/usr/local/bin/auto_config.sh"]
 
-CMD ["php-fpm7.3", "-F"]
+WORKDIR /var/www/html/
+
+EXPOSE 9000
+
+CMD ["/usr/sbin/php-fpm7.3", "-F"]

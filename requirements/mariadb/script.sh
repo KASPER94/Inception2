@@ -1,5 +1,5 @@
 #!/bin/sh
-
+mysql_install_db
 #démarrer MySQL
 service mysql start;
 

@@ -1,49 +1,63 @@
+version: '3'
+
 services:
   nginx:
+    container_name: nginx
     networks:
       - inception
-    build: requirements/nginx/
-    container_name: nginx
-    depends_on:
-      - wordpress
+    build: ./requirements/nginx/
     ports:
       - "443:443"
     volumes:
-      - wordpress:/var/www/wordpress
+      - wordpress:/var/www/html
     restart: always
 
   mariadb:
+    container_name: mariadb
     networks:
       - inception
-    build: requirements/mariadb/
-    container_name: mariadb
+    build: ./requirements/mariadb/
     restart: unless-stopped
-    env_file: .env
+    env_file: 
+      - .env
     volumes:
       - mariadb:/var/lib/mysql  # Monté sur le chemin par défaut de MariaDB
 
   wordpress:
+    container_name: wordpress
+    depends_on:
+      - mariadb
     networks:
       - inception
-    build: requirements/wordpress/
-    container_name: wordpress
+    build: 
+      context: ./requirements/wordpress/
+      dockerfile: Dockerfile
+    environment:
+      - DOMAIN_NAME=skapersk.42.fr
+      - MYSQL_DB=wordpress_db
+      - MYSQL_USER=skapersk
+      - MYSQL_PSW=Ki74Bh?,Bd78
+      - MYSQL_DB_HOST=mariadb
+      - MYSQL_ROOT_PSW=Xo78Gj!,Gh09
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/html
     restart: always
-    expose:
-      - "9000"
 
 volumes:
-  wordpress:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /Users/login/data/wordpress  # Changez ce chemin selon vos besoins
   mariadb:
     driver: local
     driver_opts:
       type: none
+      device: /home/${USER}/data/mysql
       o: bind
-      device: /Users/login/data/mariadb  # Changez ce chemin selon vos besoins
+  wordpress:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/${USER}/data/wordpress
+      o: bind
 
 networks:
   inception:

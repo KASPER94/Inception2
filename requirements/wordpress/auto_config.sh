@@ -2,17 +2,23 @@
 
 sleep 10
 
-WP_DIR="/chemin/vers/votre/wordpress"
-
-# Vérifier si wp-config.php existe
-if [ ! -f "$WP_DIR/wp-config.php" ]; then
-    echo "wp-config.php n'existe pas. Création du fichier de configuration..."
-    wp config create	--allow-root \
-                        --dbname=$SQL_DATABASE \
-                        --dbuser=$SQL_USER \
-                        --dbpass=$MYSQL_PSW \
-                        --dbhost=mariadb:3306 --path='/var/www/wordpress'
+if [ -f ./wp-config.php ]
+then
+	echo "wordpress already downloaded"
 else
-    echo "wp-config.php existe déjà."
+
+	wget http://wordpress.org/latest.tar.gz
+	tar xfz latest.tar.gz
+	rm -rf /var/www/html/wp-admin /var/www/html/wp-content /var/www/html/wp-includes
+	mv wordpress/* .
+	rm -rf latest.tar.gz
+	rm -rf wordpress
+
+	sed -i "s/username_here/${MYSQL_USER}/g" wp-config-sample.php
+	sed -i "s/password_here/${MYSQL_PSW}/g" wp-config-sample.php
+	sed -i "s/database_host/${MYSQL_DB_HOST}/g" wp-config-sample.php
+	sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
+	cp wp-config-sample.php wp-config.php
 fi
 
+exec "$@"
