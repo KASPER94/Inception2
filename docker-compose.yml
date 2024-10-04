@@ -21,7 +21,7 @@ services:
     env_file: 
       - .env
     volumes:
-      - mariadb:/var/lib/mysql  # Monté sur le chemin par défaut de MariaDB
+      - mariadb:/var/lib/mysql
 
   wordpress:
     container_name: wordpress
@@ -32,18 +32,11 @@ services:
     build: 
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
-    # environment:
-    #   - DOMAIN_NAME=skapersk.42.fr
-    #   - MYSQL_DB=wordpress_db
-    #   - MYSQL_USER=skapersk
-    #   - MYSQL_PSW=Ki74Bh?,Bd78
-    #   - MYSQL_DB_HOST=mariadb
-    #   - MYSQL_ROOT_PSW=Xo78Gj!,Gh09
     env_file:
       - .env
     volumes:
       - wordpress:/var/www/html
-    restart: always
+    restart: on-failure
 
 volumes:
   mariadb:
