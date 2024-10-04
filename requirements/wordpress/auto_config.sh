@@ -14,11 +14,11 @@ else
 	rm -rf latest.tar.gz
 	rm -rf wordpress
 
-	sed -i "s/username_here/${MYSQL_USER}/g" wp-config-sample.php
-	sed -i "s/password_here/${MYSQL_PSW}/g" wp-config-sample.php
-	sed -i "s/database_host/${MYSQL_DB_HOST}/g" wp-config-sample.php
-	sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
-	cp wp-config-sample.php wp-config.php
+	# sed -i "s/username_here/${MYSQL_USER}/g" wp-config-sample.php
+	# sed -i "s/password_here/${MYSQL_PSW}/g" wp-config-sample.php
+	# sed -i "s/database_host/${MYSQL_DB_HOST}/g" wp-config-sample.php
+	# sed -i "s/database_name_here/${MYSQL_DB}/g" wp-config-sample.php
+	# cp wp-config-sample.php wp-config.php
 fi
 
 exec "$@"

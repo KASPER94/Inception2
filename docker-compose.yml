@@ -32,13 +32,13 @@ services:
     build: 
       context: ./requirements/wordpress/
       dockerfile: Dockerfile
-    environment:
-      - DOMAIN_NAME=skapersk.42.fr
-      - MYSQL_DB=wordpress_db
-      - MYSQL_USER=skapersk
-      - MYSQL_PSW=Ki74Bh?,Bd78
-      - MYSQL_DB_HOST=mariadb
-      - MYSQL_ROOT_PSW=Xo78Gj!,Gh09
+    # environment:
+    #   - DOMAIN_NAME=skapersk.42.fr
+    #   - MYSQL_DB=wordpress_db
+    #   - MYSQL_USER=skapersk
+    #   - MYSQL_PSW=Ki74Bh?,Bd78
+    #   - MYSQL_DB_HOST=mariadb
+    #   - MYSQL_ROOT_PSW=Xo78Gj!,Gh09
     env_file:
       - .env
     volumes:
