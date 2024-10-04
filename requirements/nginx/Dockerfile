@@ -5,9 +5,10 @@ RUN apt update && apt upgrade -y && \
 
 RUN mkdir -p /etc/nginx/ssl
 
-RUN openssl req -x509 -nodes -out /etc/nginx/ssl/inception.crt \
+RUN openssl req -x509 -nodes \
+	-out /etc/nginx/ssl/inception.crt \
 	-keyout /etc/nginx/ssl/inception.key \
-	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=42/CN=skapersk.42.fr/UID=skapersk"
+	-subj "/C=FR/ST=IDF/L=Paris/O=42/OU=skapersk/CN=skapersk.42.fr"
 
 COPY ./nginx.conf /etc/nginx/nginx.conf
 

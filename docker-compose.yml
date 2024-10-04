@@ -11,6 +11,10 @@ services:
     volumes:
       - wordpress:/var/www/html
     restart: always
+    extra_hosts:
+      - "skapersk.42.fr:127.0.0.1"
+    depends_on:
+      - wordpress
 
   mariadb:
     container_name: mariadb
